@@ -9,7 +9,10 @@ const store = useTaskStore()
   <div class="task-content container">
     <div class="task-content__wrapper">
       <TaskAdd @add-task="(text: string) => store.addTask(text)" />
-      <TaskList />
+      <TaskList
+        @delete-task="(id: number) => store.deleteTask(id)"
+        @update-task="(id: number) => store.updateStatusTask(id)"
+      />
     </div>
   </div>
 </template>

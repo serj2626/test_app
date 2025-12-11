@@ -4,6 +4,11 @@ import BaseButton from '../ui/BaseButton.vue'
 import { formatDate } from '@/utils/functions'
 
 const store = useTaskStore()
+
+const emit = defineEmits<{
+  'delete-task': [id: number]
+  'update-task': [id: number]
+}>()
 </script>
 <template>
   <div class="task-list">
@@ -25,8 +30,22 @@ const store = useTaskStore()
           <td>{{ task.text }}</td>
           <td>{{ task.status ? 'Выполнена' : 'Не выполнена' }}</td>
           <td>{{ formatDate(task.createdAt) }}</td>
-          <td v-if="task.status"><BaseButton label="Удалить" color="red" size="sm" /></td>
-          <td v-else><BaseButton label="Выполнить" color="success" size="sm" /></td>
+          <td v-if="task.status">
+            <BaseButton
+              label="Удалить"
+              color="red"
+              size="sm"
+              @click="emit('delete-task', task.id)"
+            />
+          </td>
+          <td v-else>
+            <BaseButton
+              label="Выполнить"
+              color="success"
+              size="sm"
+              @click="emit('update-task', task.id)"
+            />
+          </td>
         </tr>
       </tbody>
     </table>
@@ -51,7 +70,7 @@ td {
 }
 
 tr:hover {
-  background-color:  #aeaeae;
+  background-color: #aeaeae;
   color: $white;
 }
 </style>
