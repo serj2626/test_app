@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 interface IBaseButton {
   size?: 'xs' | 'sm' | 'md' | 'lg'
-  color?: 'grey' | 'blue'
+  color?: 'grey' | 'blue' | 'red' | 'success'
   label?: string
   disabled?: boolean
   radius?: string
@@ -53,6 +53,14 @@ const {
 
   &_blue {
     background-color: $info;
+    color: $white;
+  }
+  &_red {
+    background-color: $danger;
+    color: $white;
+  }
+  &_success {
+    background-color: $success;
     color: $white;
   }
 

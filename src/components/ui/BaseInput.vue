@@ -96,11 +96,10 @@ const shouldShowPlaceholder = computed(() => {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  outline: 2px solid $border-color;
-  border-radius: 10px;
+  outline: 2px solid $txt;
+  border-radius: 5px;
   transition: all 0.5s ease-in;
   background: $white;
-  min-height: 52px;
   overflow: hidden; /* Важно для анимации */
 
   &_isfocused {
@@ -109,7 +108,7 @@ const shouldShowPlaceholder = computed(() => {
 
   &_error {
     transition: all 0.5s ease-in;
-    outline-color: $border-danger;
+    outline-color: $danger;
   }
 
   &__placeholder {

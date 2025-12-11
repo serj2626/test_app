@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import TaskList from './components/task/TaskList.vue';
+import TaskContent from './components/task/TaskContent.vue';
 </script>
 <template>
-  <TaskList  />
+  <TaskContent  />
 </template>
 <style scoped lang="scss"></style>
