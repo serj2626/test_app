@@ -29,6 +29,11 @@ export const useTaskStore = defineStore('task-store', () => {
     },
   ])
 
+  // const newTaskText = reactive<{ value: string; error: string }>({
+  //   value: '',
+  //   error: '',
+  // })
+
   const filter = ref<TTaskFilter>('all')
 
   // const tasks = ref<ITask[]>(loadTasks())
@@ -85,6 +90,7 @@ export const useTaskStore = defineStore('task-store', () => {
 
   return {
     tasks,
+    // newTaskText,
     filter,
     totalCount,
     loadTasks,

@@ -4,6 +4,10 @@ import TaskAdd from './TaskAdd.vue'
 import TaskList from './TaskList.vue'
 
 const store = useTaskStore()
+
+const updateTaskByNewText = (payload: { id: number; text: string }) => {
+  store.updateTask(payload.id, payload.text)
+}
 </script>
 <template>
   <div class="task-content container">
@@ -12,6 +16,7 @@ const store = useTaskStore()
       <TaskList
         @delete-task="(id: number) => store.deleteTask(id)"
         @update-task="(id: number) => store.updateStatusTask(id)"
+        @edit-task="updateTaskByNewText"
       />
     </div>
   </div>

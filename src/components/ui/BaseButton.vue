@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 interface IBaseButton {
-  size?: 'xs' | 'sm' | 'md' | 'lg'
+  size?: 'xss' | 'xs' | 'sm' | 'md' | 'lg'
   color?: 'grey' | 'blue' | 'red' | 'success'
   label?: string
   disabled?: boolean
@@ -84,16 +84,23 @@ const {
     }
   }
 
+  &_xss {
+    padding: 4px 6px;
+    font-size: 14px;
+  }
+
   &_xs {
     padding: 6px 9px;
   }
 
   &_sm {
     padding: 6px 12px;
+    font-size: 15px;
   }
 
   &_md {
     padding: 8px 16px;
+    font-size: 16px;
   }
 
   &_lg {

@@ -2,6 +2,7 @@
 import { reactive } from 'vue'
 import BaseButton from '../ui/BaseButton.vue'
 import BaseInput from '../ui/BaseInput.vue'
+import { validateText } from '@/utils/validations';
 
 const newTask = reactive<{ value: string; error: string }>({
   value: '',
@@ -13,13 +14,14 @@ const emit = defineEmits<{
 }>()
 
 const createTask = () => {
-  if (!newTask.value.trim()) {
-    newTask.error = 'Поле не должно быть пустым'
-  } else if (newTask.value.trim().length < 3) {
-    newTask.error = 'Поле не должно быть менее 3 символов'
-  } else {
+  const resValidateText = validateText(newTask.value)
+  if (resValidateText) {
+    newTask.error = resValidateText
+    return
+  } else{
     emit('add-task', newTask.value)
     newTask.value = ''
+    newTask.error = ''
   }
 }
 </script>
@@ -27,6 +29,7 @@ const createTask = () => {
   <div class="task-add">
     <p>Создание задачи</p>
     <BaseInput
+      placeholder="Введите текст задачи"
       v-model:input-value="newTask.value"
       v-model:error="newTask.error"
       @reset-error="newTask.error = ''"

@@ -96,7 +96,7 @@ const shouldShowPlaceholder = computed(() => {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  outline: 2px solid $txt;
+  outline: 1px solid $text-secondary;
   border-radius: 5px;
   transition: all 0.5s ease-in;
   background: $white;
