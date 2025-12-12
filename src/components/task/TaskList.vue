@@ -2,7 +2,7 @@
 import { useTaskStore } from '@/stores/task'
 import BaseButton from '../ui/BaseButton.vue'
 import { formatDate } from '@/utils/functions'
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import BaseInput from '../ui/BaseInput.vue'
 import { validateText } from '@/utils/validations'
 import DeleteIcon from '@/assets/icons/DeleteIcon.vue'
@@ -11,6 +11,9 @@ import EmptyComponent from '../EmptyComponent.vue'
 import TaskFilters from './TaskFilters.vue'
 
 const store = useTaskStore()
+
+//draggedTaskId хранит id задачи, которую мы тянем.
+const draggedTaskId = ref<number | null>(null)
 
 const emit = defineEmits<{
   'delete-task': [id: number]
@@ -44,6 +47,25 @@ const resetData = () => {
   newTaskText.error = ''
   newTaskText.id = null
 }
+
+const onDragStart = (id: number) => {
+  draggedTaskId.value = id
+}
+
+const onDrop = (targetId: number) => {
+  if (draggedTaskId.value === null || draggedTaskId.value === targetId) return
+
+  const tasksCopy = [...store.tasks]
+  const draggedIndex = tasksCopy.findIndex((t) => t.id === draggedTaskId.value)
+  const targetIndex = tasksCopy.findIndex((t) => t.id === targetId)
+
+  // меняем местами
+  const [movedTask] = tasksCopy.splice(draggedIndex, 1)
+  tasksCopy.splice(targetIndex, 0, movedTask)
+
+  store.tasks = tasksCopy
+  draggedTaskId.value = null
+}
 </script>
 <template>
   <div class="task-list">
@@ -60,7 +82,15 @@ const resetData = () => {
         </tr>
       </thead>
       <tbody>
-        <tr class="task-list__item" v-for="task in store.allTasks" :key="task.id">
+        <tr
+          class="task-list__item"
+          v-for="task in store.allTasks"
+          :key="task.id"
+          :draggable="true"
+          @dragstart="onDragStart(task.id)"
+          @dragover.prevent
+          @drop="onDrop(task.id)"
+        >
           <td>
             {{ task.id }}
           </td>
@@ -181,5 +211,4 @@ td {
     gap: 10px;
   }
 }
-
 </style>
