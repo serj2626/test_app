@@ -4,7 +4,7 @@ defineProps<{ count: number }>()
 <template>
   <div class="task-counter">
     <p class="task-counter__text">
-      Количество неполненных задач: <span class="task-counter__count">{{ count }}</span>
+      Количество невыполненных задач: <span class="task-counter__count">{{ count }}</span>
     </p>
   </div>
 </template>
