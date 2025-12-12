@@ -12,31 +12,7 @@ export interface ITask {
 type TTaskFilter = 'active' | 'completed' | 'all'
 
 export const useTaskStore = defineStore('task-store', () => {
-  // const tasks = ref<ITask[]>([])
-  // const tasks = ref<ITask[]>([
-  //   { id: 1, text: 'Помыться с мочалкой', status: false, createdAt: new Date().toISOString() },
-  //   { id: 2, text: 'Почистить зубы', status: true, createdAt: new Date().toISOString() },
-  //   {
-  //     id: 3,
-  //     text: 'Купить проездной, сходить на работу',
-  //     status: false,
-  //     createdAt: new Date().toISOString(),
-  //   },
-  //   {
-  //     id: 4,
-  //     text: 'Сходить в зал, придти домой и помыться, затем поесть, почистить зубы, ну и наконец-то лечь спать в кроватку',
-  //     status: true,
-  //     createdAt: new Date().toISOString(),
-  //   },
-  // ])
-
-  // const newTaskText = reactive<{ value: string; error: string }>({
-  //   value: '',
-  //   error: '',
-  // })
-
   const filter = ref<TTaskFilter>('all')
-
   const tasks = ref<ITask[]>(loadTasks())
 
   function loadTasks() {
@@ -88,6 +64,8 @@ export const useTaskStore = defineStore('task-store', () => {
 
   const totalCount = computed(() => tasks.value.length)
 
+  const totalUnfulfilledTasks = computed(() => tasks.value.filter((task) => !task.status).length)
+
   watch(
     tasks,
     (newTasks) => {
@@ -98,9 +76,10 @@ export const useTaskStore = defineStore('task-store', () => {
 
   return {
     tasks,
-    // newTaskText,
     filter,
     totalCount,
+    totalUnfulfilledTasks,
+
     loadTasks,
     updateTask,
     deleteTask,

@@ -13,7 +13,7 @@ const updateTaskByNewText = (payload: { id: number; text: string }) => {
 <template>
   <div class="task-content container">
     <div class="task-content__wrapper">
-      <TaskCounter />
+      <TaskCounter :count="store.totalUnfulfilledTasks" />
       <TaskAdd @add-task="(text: string) => store.addTask(text)" />
       <TaskList
         @delete-task="(id: number) => store.deleteTask(id)"
