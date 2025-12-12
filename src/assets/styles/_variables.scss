@@ -24,9 +24,8 @@ $border-radius: 4px;
 
 // Тени
 $shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
-$shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-$shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+$shadow-error: 0 4px 20px rgba(255, 0, 0, 0.465);
+$shadow-success: 0 4px 20px rgba(0, 255, 0, 0.1);
 
 // Анимации
 $transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);

@@ -2,6 +2,7 @@
 import { useTaskStore } from '@/stores/task'
 import TaskAdd from './TaskAdd.vue'
 import TaskList from './TaskList.vue'
+import TaskCounter from './TaskCounter.vue'
 
 const store = useTaskStore()
 
@@ -12,11 +13,12 @@ const updateTaskByNewText = (payload: { id: number; text: string }) => {
 <template>
   <div class="task-content container">
     <div class="task-content__wrapper">
+      <TaskCounter />
       <TaskAdd @add-task="(text: string) => store.addTask(text)" />
       <TaskList
         @delete-task="(id: number) => store.deleteTask(id)"
-        @update-task="(id: number) => store.updateStatusTask(id)"
-        @edit-task="updateTaskByNewText"
+        @update-status-task="(id: number) => store.updateStatusTask(id)"
+        @edit-text-task="updateTaskByNewText"
       />
     </div>
   </div>

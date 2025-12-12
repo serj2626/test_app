@@ -2,21 +2,20 @@
 import { useTaskStore } from '@/stores/task'
 import BaseButton from '../ui/BaseButton.vue'
 import { formatDate } from '@/utils/functions'
-import { reactive, ref } from 'vue'
+import { reactive } from 'vue'
 import BaseInput from '../ui/BaseInput.vue'
 import { validateText } from '@/utils/validations'
 import DeleteIcon from '@/assets/icons/DeleteIcon.vue'
 import DoneIcon from '@/assets/icons/DoneIcon.vue'
+import EmptyComponent from '../EmptyComponent.vue'
 
 const store = useTaskStore()
 
 const emit = defineEmits<{
   'delete-task': [id: number]
-  'update-task': [id: number]
+  'update-status-task': [id: number]
   'edit-text-task': [payload: { id: number; text: string }]
 }>()
-
-// const newTaskText.id = ref<number | null>(null)
 
 const newTaskText = reactive<{ value: string; error: string; id: number | null }>({
   value: '',
@@ -28,10 +27,14 @@ const updateTextByTask = () => {
   const res = validateText(newTaskText.value)
   if (res) {
     newTaskText.error = res
-    return
   } else {
-    emit('edit-text-task', { id: newTaskText.id, text: newTaskText.value })
-    resetData()
+    emit('edit-text-task', {
+      id: newTaskText.id!,
+      text: newTaskText.value,
+    })
+    setTimeout(() => {
+      resetData()
+    }, 200)
   }
 }
 
@@ -43,13 +46,14 @@ const resetData = () => {
 </script>
 <template>
   <div class="task-list">
-    <table>
+    <table v-if="store.totalCount">
       <caption>
         Список задач
       </caption>
       <thead>
         <tr>
-          <th colspan="2">Текст задачи</th>
+          <th>№</th>
+          <th>Текст задачи</th>
           <th>Статус</th>
           <th>Дата создания</th>
           <th>Действие</th>
@@ -62,7 +66,7 @@ const resetData = () => {
           </td>
 
           <td
-            v-if="!newTaskText.id || newTaskText.id !== task.id"
+            v-if="newTaskText.id !== task.id"
             class="task-list__item-text"
             @dblclick="newTaskText.id = task.id"
           >
@@ -87,7 +91,7 @@ const resetData = () => {
             </div>
           </td>
 
-          <td>
+          <td :style="{ color: task.status ? 'green' : 'red' }">
             {{ task.status ? 'Выполнена' : 'Не выполнена' }}
           </td>
           <td>
@@ -105,7 +109,7 @@ const resetData = () => {
               v-if="!task.status"
               class="task-list__item-actions-btn"
               title="Отметить как выполненную"
-              @click="emit('update-task', task.id)"
+              @click="emit('update-status-task', task.id)"
             >
               <DoneIcon />
             </button>
@@ -113,6 +117,15 @@ const resetData = () => {
         </tr>
       </tbody>
     </table>
+    <EmptyComponent v-else shadow="error">
+      <template #header>
+        <p>📭 Список задач пуст</p>
+      </template>
+
+      <template #default>
+        <p>➕ Вы можете создать задачу</p>
+      </template>
+    </EmptyComponent>
   </div>
 </template>
 <style scoped lang="scss">
@@ -142,7 +155,8 @@ td {
 
     &-btn {
       cursor: pointer;
-      width: 20px;
+      width: 30px;
+      padding: 5px;
       transition: scale 0.3s ease-in-out;
 
       &:hover {
