@@ -1,4 +1,4 @@
-import { computed, ref, watch } from 'vue'
+import { computed, reactive, ref, watch } from 'vue'
 
 import { defineStore } from 'pinia'
 
@@ -9,16 +9,34 @@ export interface ITask {
   createdAt: string
 }
 
-export type TTaskFilter = 'active' | 'completed' | 'all' | 'unfulfilled'
+export type TTaskFilter = 'completed' | 'all' | 'unfulfilled'
+export interface IFiltersData {
+  search: string
+  status: TTaskFilter
+}
 
 export const useTaskStore = defineStore('task-store', () => {
-  const currentFilter = ref<TTaskFilter>('all')
-  const tasks = ref<ITask[]>(loadTasks())
+  const tasks = ref<ITask[]>([])
+  const filtersData = reactive<IFiltersData>({
+    search: '',
+    status: 'all',
+  })
 
   function loadTasks() {
     const saved = localStorage.getItem('vue-tasks')
-    return saved ? JSON.parse(saved) : []
+    tasks.value = saved ? JSON.parse(saved) : []
   }
+  function loadFilters() {
+    const saved = localStorage.getItem('vue-task-filters')
+    if (saved) {
+      const parsed = JSON.parse(saved) as IFiltersData
+      filtersData.search = parsed.search
+      filtersData.status = parsed.status
+    }
+  }
+
+  loadTasks()
+  loadFilters()
 
   const nextIndex = computed(() => {
     const lastTask = tasks.value[tasks.value.length - 1]
@@ -59,12 +77,28 @@ export const useTaskStore = defineStore('task-store', () => {
   }
 
   function setFilter(newFilter: TTaskFilter) {
-    currentFilter.value = newFilter
+    filtersData.status = newFilter
   }
 
-  const totalCount = computed(() => tasks.value.length)
+  const totalCount = computed(() => allTasks.value.length)
 
   const totalUnfulfilledTasks = computed(() => tasks.value.filter((task) => !task.status).length)
+
+  const allTasks = computed(() => {
+    let list = tasks.value
+
+    if (filtersData.status === 'completed') {
+      list = list.filter((t) => t.status)
+    } else if (filtersData.status === 'unfulfilled') {
+      list = list.filter((t) => !t.status)
+    }
+
+    if (filtersData.search.trim()) {
+      const query = filtersData.search.trim().toLowerCase()
+      list = list.filter((t) => t.text.toLowerCase().includes(query))
+    }
+    return list
+  })
 
   watch(
     tasks,
@@ -74,12 +108,23 @@ export const useTaskStore = defineStore('task-store', () => {
     { deep: true },
   )
 
+  watch(
+    filtersData,
+    (newFilters) => {
+      localStorage.setItem('vue-task-filters', JSON.stringify(newFilters))
+    },
+    { deep: true },
+  )
+
   return {
+    // STATE
     tasks,
-    currentFilter,
+    filtersData,
+    // GETTERS
     totalCount,
     totalUnfulfilledTasks,
-
+    allTasks,
+    // SETTERS
     loadTasks,
     updateTask,
     deleteTask,

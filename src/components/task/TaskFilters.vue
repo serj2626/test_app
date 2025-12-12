@@ -17,18 +17,13 @@ const filters: ITaskFilter[] = [
   },
   {
     id: 2,
-    label: 'active',
-    title: 'Активные',
-  },
-  {
-    id: 3,
     label: 'completed',
     title: 'Выполненные',
   },
   {
-    id: 4,
+    id: 3,
     label: 'unfulfilled',
-    title: 'Неполненные',
+    title: 'Невыполненные',
   },
 ]
 </script>
@@ -39,7 +34,7 @@ const filters: ITaskFilter[] = [
         <BaseButton
           :label="filter.title"
           size="xs"
-          :color="taskStore.currentFilter === filter.label ? 'success' : 'white'"
+          :color="taskStore.filtersData.status === filter.label ? 'success' : 'white'"
           @click="taskStore.setFilter(filter.label)"
         />
       </li>

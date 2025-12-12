@@ -30,6 +30,7 @@ const createTask = () => {
     <p>Создание задачи</p>
     <BaseInput
       placeholder="Введите текст задачи"
+      type="search"
       v-model:input-value="newTask.value"
       v-model:error="newTask.error"
       @reset-error="newTask.error = ''"

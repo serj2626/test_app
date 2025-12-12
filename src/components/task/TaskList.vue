@@ -47,7 +47,7 @@ const resetData = () => {
 </script>
 <template>
   <div class="task-list">
-    <p class="task-list__title">Список задач</p>
+    <p class="task-list__title">Список задач: {{ store.totalCount }}</p>
     <TaskFilters />
     <table v-if="store.totalCount">
       <thead>
@@ -60,7 +60,7 @@ const resetData = () => {
         </tr>
       </thead>
       <tbody>
-        <tr class="task-list__item" v-for="task in store.tasks" :key="task.id">
+        <tr class="task-list__item" v-for="task in store.allTasks" :key="task.id">
           <td>
             {{ task.id }}
           </td>
@@ -181,4 +181,5 @@ td {
     gap: 10px;
   }
 }
+
 </style>
