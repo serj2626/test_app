@@ -4,7 +4,6 @@ import TaskAdd from './TaskAdd.vue'
 import TaskList from './TaskList.vue'
 import TaskCounter from './TaskCounter.vue'
 import TaskSearch from './TaskSearch.vue'
-import ModalComponent from '../ModalComponent.vue'
 
 const store = useTaskStore()
 
@@ -15,7 +14,6 @@ const updateTaskByNewText = (payload: { id: number; text: string }) => {
 <template>
   <div class="task-content container">
     <div class="task-content__wrapper">
-      <!-- <ModalComponent /> -->
       <TaskCounter :count="store.totalUnfulfilledTasks" />
       <div class="task-content__wrapper-actions">
         <TaskAdd
@@ -39,6 +37,7 @@ const updateTaskByNewText = (payload: { id: number; text: string }) => {
     display: flex;
     flex-direction: column;
     gap: 20px;
+
 
     &-actions {
       display: flex;
