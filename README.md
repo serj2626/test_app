@@ -1,48 +1,41 @@
-# .
+# Task Manager - Vue.js SPA
+#### Описание проекта
+#### Одностраничное приложение для управления задачами, разработанное на Vue.js 3 с TypeScript. Приложение позволяет добавлять, редактировать, удалять и фильтровать задачи с сохранением данных в localStorage.
+<hr />
 
-This template should help get you started developing with Vue 3 in Vite.
+🚀 Функциональность
+✅ Реализовано:
 
-## Recommended IDE Setup
+* Добавление задачи - с валидацией
+* Редактирование задачи - по двойному клику
+* Удаление задачи - кнопка с иконкой
+* Фильтрация задач - Все/Активные/Выполненные
+* Сохранение данных - в localStorage
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+<hr />
 
-## Recommended Browser Setup
+🎨 Особенности:
+* Vue.js 3 + Composition API + TypeScript
+* Pinia для управления состоянием
+* SCSS
+* Компонентная архитектура
+* Валидация данных ввода текста
+* Иконки для действий
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd) 
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
 
-## Type Support for `.vue` Imports in TS
+🛠 Технологии
+* Vue.js 3 + TypeScript
+* Pinia + Vite
+* SCSS
+* ESLint + Prettier
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+<hr />
 
-## Customize configuration
+📝 Использование
+- Добавить - введите текст и нажмите "Добавить"
+- Редактировать - двойной клик по тексту задачи
+- Изменить статус задачи - клик по иконке зеленой галочки
+- Удалить - клик по иконке корзины
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+#### Фильтровать - используйте переключатели над таблицей
 
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
