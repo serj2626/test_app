@@ -26,17 +26,8 @@ export const useTaskStore = defineStore('task-store', () => {
     const saved = localStorage.getItem('vue-tasks')
     tasks.value = saved ? JSON.parse(saved) : []
   }
-  function loadFilters() {
-    const saved = localStorage.getItem('vue-task-filters')
-    if (saved) {
-      const parsed = JSON.parse(saved) as IFiltersData
-      filtersData.search = parsed.search
-      filtersData.status = parsed.status
-    }
-  }
 
   loadTasks()
-  loadFilters()
 
   const nextIndex = computed(() => {
     const lastTask = tasks.value[tasks.value.length - 1]
@@ -104,14 +95,6 @@ export const useTaskStore = defineStore('task-store', () => {
     tasks,
     (newTasks) => {
       localStorage.setItem('vue-tasks', JSON.stringify(newTasks))
-    },
-    { deep: true },
-  )
-
-  watch(
-    filtersData,
-    (newFilters) => {
-      localStorage.setItem('vue-task-filters', JSON.stringify(newFilters))
     },
     { deep: true },
   )
