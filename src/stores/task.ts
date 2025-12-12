@@ -9,10 +9,10 @@ export interface ITask {
   createdAt: string
 }
 
-type TTaskFilter = 'active' | 'completed' | 'all'
+export type TTaskFilter = 'active' | 'completed' | 'all' | 'unfulfilled'
 
 export const useTaskStore = defineStore('task-store', () => {
-  const filter = ref<TTaskFilter>('all')
+  const currentFilter = ref<TTaskFilter>('all')
   const tasks = ref<ITask[]>(loadTasks())
 
   function loadTasks() {
@@ -59,7 +59,7 @@ export const useTaskStore = defineStore('task-store', () => {
   }
 
   function setFilter(newFilter: TTaskFilter) {
-    filter.value = newFilter
+    currentFilter.value = newFilter
   }
 
   const totalCount = computed(() => tasks.value.length)
@@ -76,7 +76,7 @@ export const useTaskStore = defineStore('task-store', () => {
 
   return {
     tasks,
-    filter,
+    currentFilter,
     totalCount,
     totalUnfulfilledTasks,
 

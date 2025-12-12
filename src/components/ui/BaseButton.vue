@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 interface IBaseButton {
   size?: 'xss' | 'xs' | 'sm' | 'md' | 'lg'
-  color?: 'grey' | 'blue' | 'red' | 'success'
+  color?: 'grey' | 'blue' | 'red' | 'success' | 'white'
   label?: string
   disabled?: boolean
   radius?: string
@@ -62,6 +62,16 @@ const {
   &_success {
     background-color: $success;
     color: $white;
+  }
+
+  &_white {
+    background-color: $white;
+    color: $txt;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      box-shadow: 0 4px 2px rgba(0, 0, 0, 0.23);
+    }
   }
 
   &_grey {

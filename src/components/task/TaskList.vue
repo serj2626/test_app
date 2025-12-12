@@ -8,6 +8,7 @@ import { validateText } from '@/utils/validations'
 import DeleteIcon from '@/assets/icons/DeleteIcon.vue'
 import DoneIcon from '@/assets/icons/DoneIcon.vue'
 import EmptyComponent from '../EmptyComponent.vue'
+import TaskFilters from './TaskFilters.vue'
 
 const store = useTaskStore()
 
@@ -46,10 +47,9 @@ const resetData = () => {
 </script>
 <template>
   <div class="task-list">
+    <p class="task-list__title">Список задач</p>
+    <TaskFilters />
     <table v-if="store.totalCount">
-      <caption>
-        Список задач
-      </caption>
       <thead>
         <tr>
           <th>№</th>
@@ -129,11 +129,12 @@ const resetData = () => {
   </div>
 </template>
 <style scoped lang="scss">
-caption {
+.task-list__title {
   font-size: 28px;
   font-weight: 600;
   text-transform: uppercase;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  text-align: center;
 }
 table {
   width: 100%;
